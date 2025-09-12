@@ -12,5 +12,5 @@ urlpatterns = [
     path('villes/create', views.creerVille, name='ville-create'),
     path('voyages/add', views.formulaireCreationVoyage, name='voyage-add'),
     path('voyages/create', views.creerVoyage, name='voyage-create'),
-    path('voyage/<int:idVoyage>/addvoyage', views.ajouterEtape, name='voyage-detail')
+    path('voyage/<int:voyage_id>/addvoyage/', views.ajouterEtape, name='etape-add')
 ]

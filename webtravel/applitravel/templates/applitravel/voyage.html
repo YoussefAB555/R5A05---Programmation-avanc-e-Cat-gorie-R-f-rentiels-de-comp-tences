@@ -10,7 +10,7 @@
   </tbody>
 </table>
 <h2>Ajouter une étape</h2>
-<form action="/voyage/{{voyageIDVoyage}}/addVoyage" method="post">
+<form action="{% url 'etape-add' voyage_id=voyage.IDVoyage %}" method="post">
     {% csrf_token %}
     <div class="mb-3">
 

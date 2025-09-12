@@ -15,7 +15,8 @@ def villes(request):
 def voyage(request, voyage_id:int):
     v = get_object_or_404(Voyage, IDVoyage=voyage_id)
     etapes = Composition.objects.filter(voyage=v)
-    return render(request, 'applitravel/voyage.html', {'voyage': v, 'etapes': etapes})
+    villes = Ville.objects.all()
+    return render(request, 'applitravel/voyage.html', {'voyage': v, 'etapes': etapes, 'lesVilles': villes})
 
 def formulaireCreationVille(request):
     return render(request, 'applitravel/formulaireCreationVille.html', {'form': VilleForm()})
@@ -38,6 +39,21 @@ def creerVoyage(request):
             v = form.save()
             return render(request, 'applitravel/traitementFormulaireCreationVoyage.html', {'titre': v.Titre})
     return redirect('voyage-add')
+
+def ajouterEtape(request, voyage_id):
+    voyage = get_object_or_404(Voyage, IDVoyage=voyage_id)
+    if request.method == 'POST':
+        ville_id = request.POST.get('ville')
+        nb_jours = request.POST.get('Nb_Jours')
+        ville = get_object_or_404(Ville, IDVille=ville_id)
+        
+        # Si l'étape existe déjà, on la supprime avant de la recréer
+        Composition.objects.filter(voyage=voyage, ville=ville).delete()
+        
+        etape = Composition(voyage=voyage, ville=ville, nbJours=nb_jours)
+        etape.save()
+        
+    return redirect('voyage-detail', voyage_id=voyage.IDVoyage)
 
 
 
