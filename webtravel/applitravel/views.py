@@ -55,5 +55,43 @@ def ajouterEtape(request, voyage_id):
         
     return redirect('voyage-detail', voyage_id=voyage.IDVoyage)
 
+def supprimerVoyage(request, voyage_id):
+    voyage = get_object_or_404(Voyage, IDVoyage=voyage_id)
+    voyage.delete()
+    return redirect('voyages')
+
+def supprimerVille(request, ville_id):
+    ville = get_object_or_404(Ville, IDVille=ville_id)
+    ville.delete()
+    return redirect('villes')
+
+def afficherFormulaireModificationVoyage(request, voyage_id):
+    voyage = get_object_or_404(Voyage, IDVoyage=voyage_id)
+    form = VoyageForm(instance=voyage)
+    return render(request, 'applitravel/formulaireModificationVoyage.html', {'form': form, 'voyage_id': voyage_id})
+
+def modifierVoyage(request, voyage_id):
+    voyage = get_object_or_404(Voyage, IDVoyage=voyage_id)
+    if request.method == 'POST':
+        form = VoyageForm(request.POST, instance=voyage)
+        if form.is_valid():
+            form.save()
+            return redirect('voyage-detail', voyage_id=voyage_id)
+    return redirect('voyage-update', voyage_id=voyage_id)
+
+def afficherFormulaireModificationVille(request, ville_id):
+    ville = get_object_or_404(Ville, IDVille=ville_id)
+    form = VilleForm(instance=ville)
+    return render(request, 'applitravel/formulaireModificationVille.html', {'form': form, 'ville_id': ville_id})
+
+def modifierVille(request, ville_id):
+    ville = get_object_or_404(Ville, IDVille=ville_id)
+    if request.method == 'POST':
+        form = VilleForm(request.POST, instance=ville)
+        if form.is_valid():
+            form.save()
+            return redirect('villes')
+    return redirect('ville-update', ville_id=ville_id)
+
 
 

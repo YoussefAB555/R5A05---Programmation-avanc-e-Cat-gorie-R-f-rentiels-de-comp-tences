@@ -1,0 +1,10 @@
+{% extends 'applitravel/base.html' %}
+{% block title %}Modifier Ville{% endblock %}
+{% block main %}
+<h2>Modifier une ville</h2>
+<form action="{% url 'ville-updated' ville_id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Modifier</button>
+</form>
+{% endblock %}
