@@ -1,0 +1,8 @@
+{% extends 'applitravel/base.html' %}
+{% block title %}Ajouter une ville{% endblock %}
+{% block main %}
+<h2>Ajouter une ville</h2>
+<form method='post' action='/villes/create'>{% csrf_token %}{{ form.as_p }}
+  <button class='btn btn-primary' type='submit'>Créer</button>
+</form>
+{% endblock %}

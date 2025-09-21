@@ -1,0 +1,6 @@
+{% extends 'applitravel/base.html' %}
+{% block title %}Voyage créé{% endblock %}
+{% block main %}
+<div class='alert alert-success'>Le voyage <strong>{{ titre }}</strong> a été créé.</div>
+<a href='/voyages/' class='btn btn-outline-secondary'>Voir les voyages</a>
+{% endblock %}

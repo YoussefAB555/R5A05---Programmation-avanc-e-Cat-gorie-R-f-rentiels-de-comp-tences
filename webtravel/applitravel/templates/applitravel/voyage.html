@@ -1,0 +1,12 @@
+{% extends 'applitravel/base.html' %}
+{% block title %}Détail voyage{% endblock %}
+{% block main %}
+<h2>{{ voyage }}</h2>
+<table class='table table-striped'>
+  <thead><tr><th>Ville</th><th>Jours</th></tr></thead>
+  <tbody>
+  {% for e in etapes %}<tr><td>{{ e.ville }}</td><td>{{ e.nbJours }}</td></tr>
+  {% empty %}<tr><td colspan='2'>Aucune étape</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

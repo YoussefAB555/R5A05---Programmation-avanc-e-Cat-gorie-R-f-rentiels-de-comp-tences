@@ -1,0 +1,9 @@
+{% extends 'applitravel/base.html' %}
+{% block title %}Villes{% endblock %}
+{% block main %}
+<h2>Villes ({{ villes|length }})</h2>
+<ul class='list-group'>
+  {% for v in villes %}<li class='list-group-item'>{{ v }}</li>
+  {% empty %}<li class='list-group-item'>Aucune ville</li>{% endfor %}
+</ul>
+{% endblock %}
