@@ -18,5 +18,6 @@ urlpatterns = [
     path('voyages/<int:voyage_id>/updated/', views.modifierVoyage, name='voyage-updated'),
     path('villes/<int:ville_id>/delete/', views.supprimerVille, name='ville-delete'),
     path('villes/<int:ville_id>/update/', views.afficherFormulaireModificationVille, name='ville-update'),
-    path('villes/<int:ville_id>/updated/', views.modifierVille, name='ville-updated')
+    path('villes/<int:ville_id>/updated/', views.modifierVille, name='ville-updated'),
+    path('voyages/<int:voyage_id>/deleteEtape/<int:etape_id>/', views.supprimerEtapeDansVoyage, name='etape-delete'),
 ]

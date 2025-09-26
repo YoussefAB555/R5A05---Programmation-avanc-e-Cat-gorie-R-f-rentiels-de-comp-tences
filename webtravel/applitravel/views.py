@@ -93,5 +93,10 @@ def modifierVille(request, ville_id):
             return redirect('villes')
     return redirect('ville-update', ville_id=ville_id)
 
+def supprimerEtapeDansVoyage(request, voyage_id, etape_id):
+    etape = get_object_or_404(Composition, IDEtape=etape_id)
+    etape.delete()
+    return redirect('voyage-detail', voyage_id=voyage_id)
+
 
 

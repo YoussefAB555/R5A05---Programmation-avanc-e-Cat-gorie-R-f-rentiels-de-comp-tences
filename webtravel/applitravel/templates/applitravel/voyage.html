@@ -5,7 +5,7 @@
 <table class='table table-striped'>
   <thead><tr><th>Ville</th><th>Jours</th></tr></thead>
   <tbody>
-  {% for e in etapes %}<tr><td>{{ e.ville }}</td><td>{{ e.nbJours }}</td></tr>
+  {% for e in etapes %}<tr><td>{{ e.ville }}</td><td>{{ e.nbJours }}</td><td><button class='btn btn-sm btn-outline-secondary' onclick='fillEtapeForm({{ e.ville.IDVille }}, {{ e.nbJours }})'>Modifier</button> <a class='btn btn-sm btn-outline-danger' href='{% url 'etape-delete' voyage_id=voyage.IDVoyage etape_id=e.IDEtape %}'>Supprimer</a></td></tr>
   {% empty %}<tr><td colspan='2'>Aucune étape</td></tr>{% endfor %}
   </tbody>
 </table>
@@ -27,5 +27,10 @@
         <input type="text" name="Nb_Jours" class="form_control" maxlength="10"  required id="id_nbjours">
     </div>
     <button type="submit">Ajouter</button>
-</form>
+<script>
+function fillEtapeForm(villeId, nbJours) {
+    document.getElementById('id_ville').value = villeId;
+    document.getElementById('id_nbjours').value = nbJours;
+}
+</script>
 {% endblock %}
