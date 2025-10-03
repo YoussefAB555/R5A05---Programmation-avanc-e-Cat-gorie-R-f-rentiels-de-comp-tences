@@ -2,7 +2,7 @@
 {% block title %}Modifier Voyage{% endblock %}
 {% block main %}
 <h2>Modifier un voyage</h2>
-<form action="{% url 'voyage-updated' voyage_id %}" method="post">
+<form action="{% url 'voyage-updated' voyage_id %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Modifier</button>

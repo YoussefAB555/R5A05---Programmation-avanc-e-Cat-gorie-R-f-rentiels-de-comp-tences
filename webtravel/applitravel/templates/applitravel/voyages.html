@@ -5,10 +5,13 @@
 <ul class='list-group'>
   {% for v in voyages %}
     <li class='list-group-item d-flex justify-content-between align-items-center'>
+      <img src="{{ v.image.url }}" alt="Image du voyage" style="width: 100px; height: auto; margin-right: 20px;">
       <span>{{ v }}</span>
-      <a class='btn btn-sm btn-outline-primary' href='{% url 'voyage-detail' v.IDVoyage %}'>Détail</a>
-      <a class='btn btn-sm btn-outline-secondary' href='{% url 'voyage-update' v.IDVoyage %}'>Modifier</a>
-      <a class='btn btn-sm btn-outline-danger' href='{% url 'voyage-delete' v.IDVoyage %}'>Supprimer</a>
+      <div>
+          <a class='btn btn-sm btn-outline-primary' href='{% url 'voyage-detail' v.IDVoyage %}'>Détail</a>
+          <a class='btn btn-sm btn-outline-secondary' href='{% url 'voyage-update' v.IDVoyage %}'>Modifier</a>
+          <a class='btn btn-sm btn-outline-danger' href='{% url 'voyage-delete' v.IDVoyage %}'>Supprimer</a>
+      </div>
     </li>
   {% empty %}<li class='list-group-item'>Aucun voyage</li>{% endfor %}
 </ul>

@@ -26,5 +26,8 @@ WSGI_APPLICATION = 'webtravel.wsgi.application'
 DATABASES = { 'default': { 'ENGINE':'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3' } }
 AUTH_PASSWORD_VALIDATORS = []
 LANGUAGE_CODE = 'fr-fr'; TIME_ZONE = 'Europe/Paris'; USE_I18N = True; USE_TZ = True
-STATIC_URL = 'static/'; STATICFILES_DIRS = []
+STATIC_URL = 'static/'
+
+MEDIA_URL = '/images/'
+MEDIA_ROOT = BASE_DIR / 'images'; STATICFILES_DIRS = []
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

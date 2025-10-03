@@ -34,7 +34,7 @@ def formulaireCreationVoyage(request):
 
 def creerVoyage(request):
     if request.method == 'POST':
-        form = VoyageForm(request.POST)
+        form = VoyageForm(request.POST, request.FILES)
         if form.is_valid():
             v = form.save()
             return render(request, 'applitravel/traitementFormulaireCreationVoyage.html', {'titre': v.Titre})
@@ -73,7 +73,7 @@ def afficherFormulaireModificationVoyage(request, voyage_id):
 def modifierVoyage(request, voyage_id):
     voyage = get_object_or_404(Voyage, IDVoyage=voyage_id)
     if request.method == 'POST':
-        form = VoyageForm(request.POST, instance=voyage)
+        form = VoyageForm(request.POST, request.FILES, instance=voyage)
         if form.is_valid():
             form.save()
             return redirect('voyage-detail', voyage_id=voyage_id)

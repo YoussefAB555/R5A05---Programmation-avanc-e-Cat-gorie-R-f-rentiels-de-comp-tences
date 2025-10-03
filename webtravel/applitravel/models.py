@@ -10,6 +10,7 @@ class Voyage(models.Model):
     IDVoyage = models.AutoField(primary_key=True)
     Titre = models.CharField(max_length=120)
     Prix = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='imagesVoyages/', default='imagesVoyages/default.jpg')
     def __str__(self): return f"{self.Titre} - {self.Prix} €"
 
 class Composition(models.Model):

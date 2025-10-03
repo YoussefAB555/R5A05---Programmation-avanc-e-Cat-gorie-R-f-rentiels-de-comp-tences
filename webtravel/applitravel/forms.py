@@ -15,7 +15,7 @@ class VilleForm(ModelForm):
 class VoyageForm(ModelForm):
     class Meta:
         model = Voyage
-        fields = ['Titre','Prix']
+        fields = ['Titre','Prix','image']
 
 class EtapeForm(ModelForm):
     class Meta:

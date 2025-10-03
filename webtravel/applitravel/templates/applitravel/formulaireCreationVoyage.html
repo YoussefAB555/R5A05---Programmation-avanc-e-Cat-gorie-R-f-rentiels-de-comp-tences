@@ -2,7 +2,7 @@
 {% block title %}Ajouter un voyage{% endblock %}
 {% block main %}
 <h2>Ajouter un voyage</h2>
-<form method='post' action='/voyages/create'>{% csrf_token %}{{ form.as_p }}
+<form method='post' action='/voyages/create' enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}
   <button class='btn btn-primary' type='submit'>Créer</button>
 </form>
 {% endblock %}
