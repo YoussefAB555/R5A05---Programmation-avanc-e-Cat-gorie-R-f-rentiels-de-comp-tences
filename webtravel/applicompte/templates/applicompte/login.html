@@ -1,0 +1,12 @@
+{% extends 'applitravel/base.html' %}
+{% block title %}Connexion{% endblock %}
+{% block main %}
+<h2>Connexion</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Connexion</button>
+</form>
+<p><a href="#">Mot de passe oublié ?</a></p>
+<p><a href="#">S'inscrire</a></p>
+{% endblock %}

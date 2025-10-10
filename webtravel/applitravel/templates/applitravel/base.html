@@ -10,7 +10,13 @@
   <link rel='stylesheet' href='{% static "applitravel/css/styles.css" %}'>
 </head>
 <body class='d-flex flex-column min-vh-100'>
-  {% include 'applitravel/menu.html' %}
+  {% if user.is_staff %}
+    {% include 'applicompte/menuStaff.html' %}
+  {% elif user.is_authenticated %}
+    {% include 'applicompte/menuClient.html' %}
+  {% else %}
+    {% include 'applicompte/menuNonConnecte.html' %}
+  {% endif %}
   <main class='container py-4 flex-fill'>
     {% block main %}{% endblock %}
   </main>

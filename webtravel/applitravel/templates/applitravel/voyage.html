@@ -5,10 +5,15 @@
 <table class='table table-striped'>
   <thead><tr><th>Ville</th><th>Jours</th></tr></thead>
   <tbody>
-  {% for e in etapes %}<tr><td>{{ e.ville }}</td><td>{{ e.nbJours }}</td><td><button class='btn btn-sm btn-outline-secondary' onclick='fillEtapeForm({{ e.ville.IDVille }}, {{ e.nbJours }})'>Modifier</button> <a class='btn btn-sm btn-outline-danger' href='{% url 'etape-delete' voyage_id=voyage.IDVoyage etape_id=e.IDEtape %}'>Supprimer</a></td></tr>
+  {% for e in etapes %}<tr><td>{{ e.ville }}</td><td>{{ e.nbJours }}</td>
+  {% if user.is_staff %}
+  <td><button class='btn btn-sm btn-outline-secondary' onclick='fillEtapeForm({{ e.ville.IDVille }}, {{ e.nbJours }})'>Modifier</button> <a class='btn btn-sm btn-outline-danger' href='{% url 'etape-delete' voyage_id=voyage.IDVoyage etape_id=e.IDEtape %}'>Supprimer</a></td>
+  {% endif %}
+  </tr>
   {% empty %}<tr><td colspan='2'>Aucune étape</td></tr>{% endfor %}
   </tbody>
 </table>
+{% if user.is_staff %}
 <h2>Ajouter une étape</h2>
 <form action="{% url 'etape-add' voyage_id=voyage.IDVoyage %}" method="post">
     {% csrf_token %}
@@ -27,7 +32,8 @@
         <input type="text" name="Nb_Jours" class="form_control" maxlength="10"  required id="id_nbjours">
     </div>
     <button type="submit">Ajouter</button>
-<script>
+</form>
+{% endif %}<script>
 function fillEtapeForm(villeId, nbJours) {
     document.getElementById('id_ville').value = villeId;
     document.getElementById('id_nbjours').value = nbJours;
