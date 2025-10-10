@@ -6,6 +6,10 @@ class VilleForm(ModelForm):
     class Meta:
         model = Ville
         fields = ['NomVille','NomPays']
+        labels ={
+            'NomVille':'Nom de la ville',
+            'NomPays':'Nom du Pays',
+        }
 
 class VoyageForm(ModelForm):
     class Meta:
