@@ -38,3 +38,6 @@ def creerVoyage(request):
             v = form.save()
             return render(request, 'applitravel/traitementFormulaireCreationVoyage.html', {'titre': v.Titre})
     return redirect('voyage-add')
+
+
+

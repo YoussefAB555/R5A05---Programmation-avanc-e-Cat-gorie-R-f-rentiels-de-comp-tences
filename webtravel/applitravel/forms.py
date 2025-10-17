@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Ville, Voyage
+from .models import Ville, Voyage, Composition
+
 
 class VilleForm(ModelForm):
     class Meta:
@@ -15,3 +16,8 @@ class VoyageForm(ModelForm):
     class Meta:
         model = Voyage
         fields = ['Titre','Prix']
+
+class EtapeForm(ModelForm):
+    class Meta:
+        model = Composition
+        fields = ['ville','nbJours']

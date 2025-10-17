@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from applitravel import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
@@ -11,4 +12,5 @@ urlpatterns = [
     path('villes/create', views.creerVille, name='ville-create'),
     path('voyages/add', views.formulaireCreationVoyage, name='voyage-add'),
     path('voyages/create', views.creerVoyage, name='voyage-create'),
+    path('voyage/<int:idVoyage>/addvoyage', views.ajouterEtape, name='voyage-detail')
 ]
