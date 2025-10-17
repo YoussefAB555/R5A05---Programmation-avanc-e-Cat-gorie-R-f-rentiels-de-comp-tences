@@ -10,6 +10,9 @@
   <link rel='stylesheet' href='{% static "applitravel/css/styles.css" %}'>
 </head>
 <body class='d-flex flex-column min-vh-100'>
+  {% if user.is_authenticated %}
+    <img src="{{ user.traveluser.image.url }}" alt="Photo de profil" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+  {% endif %}
   {% if user.is_staff %}
     {% include 'applicompte/menuStaff.html' %}
   {% elif user.is_authenticated %}

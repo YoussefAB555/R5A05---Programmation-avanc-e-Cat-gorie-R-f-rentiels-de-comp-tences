@@ -1,0 +1,22 @@
+{% extends 'applitravel/base.html' %}
+{% block title %}Profil{% endblock %}
+{% block main %}
+<h2>Profil de {{ user.username }}</h2>
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ travel_user.image.url }}" alt="Photo de profil" class="img-fluid">
+        <form action="{% url 'profil-update' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ image_form.as_p }}
+            <button type="submit" name="update_image" class="btn btn-primary">Changer l'image</button>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <form action="{% url 'profil-update' %}" method="post">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            <button type="submit" name="update_profile" class="btn btn-primary">Mettre à jour le profil</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

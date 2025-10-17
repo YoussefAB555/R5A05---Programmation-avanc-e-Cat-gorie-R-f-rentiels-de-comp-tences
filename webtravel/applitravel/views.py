@@ -2,27 +2,41 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Voyage, Ville, Composition
 from .forms import VilleForm, VoyageForm
 from django.contrib.auth.models import User
+from applicompte.models import TravelUser
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-def home(request): return render(request, 'applitravel/home.html')
+def home(request):
+    travel_user = None
+    if request.user.is_authenticated:
+        travel_user, created = TravelUser.objects.get_or_create(user=request.user)
+    return render(request, 'applitravel/home.html', {'travel_user': travel_user})
 
 def voyages(request):
+    travel_user = None
+    if request.user.is_authenticated:
+        travel_user, created = TravelUser.objects.get_or_create(user=request.user)
     return render(request, 'applitravel/voyages.html',
-                  {'voyages': Voyage.objects.all()})
+                  {'voyages': Voyage.objects.all(), 'travel_user': travel_user})
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def villes(request):
+    travel_user = None
+    if request.user.is_authenticated:
+        travel_user, created = TravelUser.objects.get_or_create(user=request.user)
     return render(request, 'applitravel/villes.html',
-                  {'villes': Ville.objects.all()})
+                  {'villes': Ville.objects.all(), 'travel_user': travel_user})
 
 def voyage(request, voyage_id:int):
     v = get_object_or_404(Voyage, IDVoyage=voyage_id)
     etapes = Composition.objects.filter(voyage=v)
     villes = Ville.objects.all()
-    return render(request, 'applitravel/voyage.html', {'voyage': v, 'etapes': etapes, 'lesVilles': villes})
+    travel_user = None
+    if request.user.is_authenticated:
+        travel_user, created = TravelUser.objects.get_or_create(user=request.user)
+    return render(request, 'applitravel/voyage.html', {'voyage': v, 'etapes': etapes, 'lesVilles': villes, 'travel_user': travel_user})
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
