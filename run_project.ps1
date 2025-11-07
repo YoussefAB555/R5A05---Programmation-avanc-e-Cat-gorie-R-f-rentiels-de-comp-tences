@@ -12,6 +12,9 @@ Write-Host "Activating virtual environment and installing requirements..."
 
 pip install -r webtravel\requirements.txt
 
-Write-Host "Starting Django development server..."
+Write-Host "Creating default superuser (root:root) if it doesn't exist..."
 cd webtravel
+python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='root').exists() or User.objects.create_superuser('root', 'root@example.com', 'root')"
+
+Write-Host "Starting Django development server..."
 python manage.py runserver
