@@ -189,3 +189,8 @@ def payerPanier(request):
     commande.payee = True
     commande.save()
     return render(request, 'applitravel/avisPaiement.html', {'commande': commande})
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def dashboard(request):
+    return render(request, 'applitravel/dashboard.html')

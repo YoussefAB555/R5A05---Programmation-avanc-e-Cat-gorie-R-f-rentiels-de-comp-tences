@@ -25,4 +25,6 @@ urlpatterns = [
     path('panier/remove/<int:voyage_id>/', views.retirerDuPanier, name='panier-remove'),
     path('panier/vider/', views.viderPanier, name='panier-vider'),
     path('panier/payer/', views.payerPanier, name='panier-payer'),
+
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]
