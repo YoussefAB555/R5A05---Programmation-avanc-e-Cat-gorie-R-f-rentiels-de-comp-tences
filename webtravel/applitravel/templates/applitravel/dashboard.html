@@ -1,0 +1,80 @@
+{% extends "applitravel/base.html" %}
+{% load static %}
+
+{% block custom_css %}
+<style>
+    .dashboard-card {
+        margin-bottom: 20px;
+    }
+    .dashboard-card .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 150px;
+    }
+    .dashboard-card .card-title {
+        font-size: 1.5rem;
+    }
+    .dashboard-card .card-text {
+        font-size: 1.2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Dashboard Administrateur</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary dashboard-card">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion des Voyages</h5>
+                    <p class="card-text">Gérer les voyages disponibles.</p>
+                    <a href="{% url 'voyages' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success dashboard-card">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion des Villes</h5>
+                    <p class="card-text">Gérer les villes de destination.</p>
+                    <a href="{% url 'villes' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info dashboard-card">
+                <div class="card-body">
+                    <h5 class="card-title">Clients</h5>
+                    <p class="card-text">Voir la liste des clients.</p>
+                    <a href="{% url 'clients' %}" class="btn btn-light">Accéder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card text-dark bg-light dashboard-card">
+                <div class="card-body">
+                    <h5 class="card-title">Historique des Commandes</h5>
+                    <p class="card-text">Consulter toutes les commandes.</p>
+                    <a href="{% url 'historique-commandes' %}" class="btn btn-secondary">Voir l'historique</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-dark bg-warning dashboard-card">
+                <div class="card-body">
+                    <h5 class="card-title">Statistiques</h5>
+                    <p class="card-text">Analyser les données de ventes.</p>
+                    <a href="{% url 'stats' %}" class="btn btn-secondary">Voir les stats</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
