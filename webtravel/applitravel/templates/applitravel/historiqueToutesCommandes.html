@@ -1,0 +1,39 @@
+{% extends "applitravel/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Historique de Toutes les Commandes</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID Commande</th>
+                <th>Client</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.IDCommande }}</td>
+                <td>{{ commande.user.username }}</td>
+                <td>{{ commande.date_commande|date:"d/m/Y H:i" }}</td>
+                <td>{{ commande.total }} €</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for item in commande.items.all %}
+                            <li>{{ item.quantite }} x {{ item.voyage.Titre }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">Aucune commande trouvée.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

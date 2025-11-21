@@ -27,4 +27,6 @@ urlpatterns = [
     path('panier/payer/', views.payerPanier, name='panier-payer'),
 
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('clients/', views.clients, name='clients'),
+    path('historique-commandes/', views.historiqueToutesCommandes, name='historique-commandes'),
 ]

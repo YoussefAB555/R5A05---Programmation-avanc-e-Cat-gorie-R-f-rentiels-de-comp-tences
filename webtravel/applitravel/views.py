@@ -194,3 +194,15 @@ def payerPanier(request):
 @user_passes_test(lambda u: u.is_staff)
 def dashboard(request):
     return render(request, 'applitravel/dashboard.html')
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def clients(request):
+    clients = User.objects.filter(is_staff=False)
+    return render(request, 'applitravel/clients.html', {'clients': clients})
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def historiqueToutesCommandes(request):
+    commandes = Commande.objects.filter(payee=True).order_by('-date_commande')
+    return render(request, 'applitravel/historiqueToutesCommandes.html', {'commandes': commandes})
