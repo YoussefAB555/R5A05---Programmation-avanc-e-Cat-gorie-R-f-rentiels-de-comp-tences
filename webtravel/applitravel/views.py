@@ -236,3 +236,22 @@ def revenus(request):
 @user_passes_test(lambda u: u.is_staff)
 def revenus_page(request):
     return render(request, 'applitravel/revenus.html')
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def ventes(request):
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=7)
+    
+    lignes = LigneCommande.objects.filter(commande__payee=True, commande__date_commande__range=[start_date, end_date])
+    sales_data = lignes.values('voyage__Titre').annotate(total_sales=Sum('quantite')).order_by('-total_sales')
+    
+    labels = [item['voyage__Titre'] for item in sales_data]
+    data = [item['total_sales'] for item in sales_data]
+    
+    return JsonResponse({'labels': labels, 'data': data})
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def ventes_page(request):
+    return render(request, 'applitravel/ventes.html')

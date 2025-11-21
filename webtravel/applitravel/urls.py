@@ -32,4 +32,6 @@ urlpatterns = [
 
     path('revenus/', views.revenus_page, name='revenus_page'),
     path('revenus/data/', views.revenus, name='revenus_data'),
+    path('ventes/', views.ventes_page, name='ventes_page'),
+    path('ventes/data/', views.ventes, name='ventes_data'),
 ]
