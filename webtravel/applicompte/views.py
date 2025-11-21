@@ -15,8 +15,8 @@ def traitementFormulaireInscription(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # login(request, user) # Automatic login will be handled in a later step
-            return redirect('login')
+            login(request, user) # Automatic login
+            return redirect('home')
     else:
         form = CustomUserCreationForm()
     return render(request, 'applicompte/register.html', {'form': form})
