@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Voyage, Ville, Composition
+from .models import Voyage, Ville, Composition, Commande, LigneCommande
 from .forms import VilleForm, VoyageForm
 from django.contrib.auth.models import User
 from applicompte.models import TravelUser
@@ -142,5 +142,50 @@ def supprimerEtapeDansVoyage(request, voyage_id, etape_id):
     etape.delete()
     return redirect('voyage-detail', voyage_id=voyage_id)
 
+@login_required
+def afficherPanier(request):
+    commande, created = Commande.objects.get_or_create(user=request.user, payee=False)
+    return render(request, 'applitravel/panier.html', {'commande': commande})
 
+@login_required
+def ajouterVoyageAuPanier(request, voyage_id):
+    voyage = get_object_or_404(Voyage, IDVoyage=voyage_id)
+    commande, created = Commande.objects.get_or_create(user=request.user, payee=False)
+    ligne, created = LigneCommande.objects.get_or_create(commande=commande, voyage=voyage)
+    if not created:
+        ligne.quantite += 1
+        ligne.save()
+    return redirect('panier')
 
+@login_required
+def retirerUnVoyageDuPanier(request, voyage_id):
+    voyage = get_object_or_404(Voyage, IDVoyage=voyage_id)
+    commande = get_object_or_404(Commande, user=request.user, payee=False)
+    ligne = get_object_or_404(LigneCommande, commande=commande, voyage=voyage)
+    if ligne.quantite > 1:
+        ligne.quantite -= 1
+        ligne.save()
+    else:
+        ligne.delete()
+    return redirect('panier')
+
+@login_required
+def retirerDuPanier(request, voyage_id):
+    voyage = get_object_or_404(Voyage, IDVoyage=voyage_id)
+    commande = get_object_or_404(Commande, user=request.user, payee=False)
+    ligne = get_object_or_404(LigneCommande, commande=commande, voyage=voyage)
+    ligne.delete()
+    return redirect('panier')
+
+@login_required
+def viderPanier(request):
+    commande = get_object_or_404(Commande, user=request.user, payee=False)
+    commande.delete()
+    return redirect('panier')
+
+@login_required
+def payerPanier(request):
+    commande = get_object_or_404(Commande, user=request.user, payee=False)
+    commande.payee = True
+    commande.save()
+    return render(request, 'applitravel/avisPaiement.html', {'commande': commande})
