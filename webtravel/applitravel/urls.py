@@ -18,4 +18,11 @@ urlpatterns = [
     path('villes/<int:ville_id>/update/', views.afficherFormulaireModificationVille, name='ville-update'),
     path('villes/<int:ville_id>/updated/', views.modifierVille, name='ville-updated'),
     path('voyages/<int:voyage_id>/deleteEtape/<int:etape_id>/', views.supprimerEtapeDansVoyage, name='etape-delete'),
+
+    path('panier/', views.afficherPanier, name='panier'),
+    path('panier/add/<int:voyage_id>/', views.ajouterVoyageAuPanier, name='panier-add'),
+    path('panier/remove-one/<int:voyage_id>/', views.retirerUnVoyageDuPanier, name='panier-remove-one'),
+    path('panier/remove/<int:voyage_id>/', views.retirerDuPanier, name='panier-remove'),
+    path('panier/vider/', views.viderPanier, name='panier-vider'),
+    path('panier/payer/', views.payerPanier, name='panier-payer'),
 ]
