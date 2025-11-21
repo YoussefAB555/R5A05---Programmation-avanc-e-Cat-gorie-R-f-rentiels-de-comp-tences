@@ -29,4 +29,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('clients/', views.clients, name='clients'),
     path('historique-commandes/', views.historiqueToutesCommandes, name='historique-commandes'),
+
+    path('revenus/', views.revenus_page, name='revenus_page'),
+    path('revenus/data/', views.revenus, name='revenus_data'),
 ]

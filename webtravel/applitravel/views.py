@@ -4,6 +4,9 @@ from .forms import VilleForm, VoyageForm
 from django.contrib.auth.models import User
 from applicompte.models import TravelUser
 from django.contrib.auth.decorators import login_required, user_passes_test
+from datetime import datetime, timedelta
+from django.http import JsonResponse
+from django.db.models import Sum, Count
 
 def home(request):
     travel_user = None
@@ -206,3 +209,30 @@ def clients(request):
 def historiqueToutesCommandes(request):
     commandes = Commande.objects.filter(payee=True).order_by('-date_commande')
     return render(request, 'applitravel/historiqueToutesCommandes.html', {'commandes': commandes})
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def revenus(request):
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=7)
+    
+    commandes = Commande.objects.filter(payee=True, date_commande__range=[start_date, end_date])
+    
+    daily_revenue = {}
+    for i in range(8):
+        date = (start_date + timedelta(days=i)).strftime('%Y-%m-%d')
+        daily_revenue[date] = 0
+
+    for commande in commandes:
+        date_str = commande.date_commande.strftime('%Y-%m-%d')
+        daily_revenue[date_str] += commande.total
+
+    labels = list(daily_revenue.keys())
+    data = list(daily_revenue.values())
+    
+    return JsonResponse({'labels': labels, 'data': data})
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def revenus_page(request):
+    return render(request, 'applitravel/revenus.html')
