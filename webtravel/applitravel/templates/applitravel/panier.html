@@ -1,0 +1,42 @@
+{% extends "applitravel/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Votre Panier</h2>
+    {% if commande and commande.items.all %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Voyage</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Sous-total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in commande.items.all %}
+                <tr>
+                    <td>{{ item.voyage.Titre }}</td>
+                    <td>{{ item.voyage.Prix }} €</td>
+                    <td>{{ item.quantite }}</td>
+                    <td>{{ item.sous_total }} €</td>
+                    <td>
+                        <a href="{% url 'panier-add' item.voyage.IDVoyage %}" class="btn btn-success btn-sm">+</a>
+                        <a href="{% url 'panier-remove-one' item.voyage.IDVoyage %}" class="btn btn-warning btn-sm">-</a>
+                        <a href="{% url 'panier-remove' item.voyage.IDVoyage %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right">
+            <h3>Total: {{ commande.total }} €</h3>
+            <a href="{% url 'panier-vider' %}" class="btn btn-danger">Vider le panier</a>
+            <a href="{% url 'panier-payer' %}" class="btn btn-primary">Payer</a>
+        </div>
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "applitravel/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Confirmation de Paiement</h2>
+    <div class="alert alert-success" role="alert">
+        Votre commande a été payée avec succès !
+    </div>
+    <h4>Récapitulatif de la commande N°{{ commande.IDCommande }}</h4>
+    <ul class="list-group">
+        {% for item in commande.items.all %}
+            <li class="list-group-item">
+                {{ item.quantite }} x {{ item.voyage.Titre }} - {{ item.sous_total }} €
+            </li>
+        {% endfor %}
+    </ul>
+    <h5 class="mt-3">Total payé : {{ commande.total }} €</h5>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}
