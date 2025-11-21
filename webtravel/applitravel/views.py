@@ -255,3 +255,44 @@ def ventes(request):
 @user_passes_test(lambda u: u.is_staff)
 def ventes_page(request):
     return render(request, 'applitravel/ventes.html')
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def stats(request):
+    best_selling = LigneCommande.objects.values('voyage__Titre').annotate(total_sold=Sum('quantite')).order_by('-total_sold').first()
+    total_orders = Commande.objects.filter(payee=True).count()
+    
+    # Calculate total revenue and average basket
+    total_revenue = 0
+    all_orders = Commande.objects.filter(payee=True)
+    for order in all_orders:
+        total_revenue += order.total
+
+    average_basket = total_revenue / total_orders if total_orders > 0 else 0
+
+    context = {
+        'best_selling': best_selling,
+        'total_orders': total_orders,
+        'average_basket': average_basket,
+    }
+    return render(request, 'applitravel/stats.html', context)
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def monthly_turnover_data(request):
+    turnover = Commande.objects.filter(payee=True).annotate(month=TruncMonth('date_commande')).values('month').annotate(total=Sum('lignecommande__voyage__Prix')).order_by('month')
+    
+    labels = [t['month'].strftime('%Y-%m') for t in turnover]
+    data = [float(t['total']) for t in turnover]
+
+    return JsonResponse({'labels': labels, 'data': data})
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def monthly_sales_data(request):
+    sales = LigneCommande.objects.filter(commande__payee=True).annotate(month=TruncMonth('commande__date_commande')).values('month').annotate(count=Count('id')).order_by('month')
+    
+    labels = [s['month'].strftime('%Y-%m') for s in sales]
+    data = [s['count'] for s in sales]
+
+    return JsonResponse({'labels': labels, 'data': data})

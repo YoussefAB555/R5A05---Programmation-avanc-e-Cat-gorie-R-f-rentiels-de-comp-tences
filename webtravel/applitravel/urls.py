@@ -34,4 +34,8 @@ urlpatterns = [
     path('revenus/data/', views.revenus, name='revenus_data'),
     path('ventes/', views.ventes_page, name='ventes_page'),
     path('ventes/data/', views.ventes, name='ventes_data'),
+    
+    path('stats/', views.stats, name='stats'),
+    path('stats/monthly_turnover/', views.monthly_turnover_data, name='monthly_turnover_data'),
+    path('stats/monthly_sales/', views.monthly_sales_data, name='monthly_sales_data'),
 ]

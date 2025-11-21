@@ -1,0 +1,93 @@
+{% extends "applitravel/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Statistiques Générales</h2>
+
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Meilleure Vente</h5>
+                    <p class="card-text">{{ best_selling.voyage__Titre }} ({{ best_selling.total_sold }} vendus)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre Total de Commandes</h5>
+                    <p class="card-text">{{ total_orders }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Panier Moyen</h5>
+                    <p class="card-text">{{ average_basket|floatformat:2 }} €</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3>Chiffre d'Affaires Mensuel</h3>
+            <canvas id="monthlyTurnoverChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h3>Ventes Mensuelles</h3>
+            <canvas id="monthlySalesChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Monthly Turnover Chart
+    fetch('{% url "monthly_turnover_data" %}')
+        .then(response => response.json())
+        .then(data => {
+            const turnoverCtx = document.getElementById('monthlyTurnoverChart').getContext('2d');
+            new Chart(turnoverCtx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Chiffre d\'affaires mensuel (€)',
+                        data: data.data,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        });
+
+    // Monthly Sales Chart
+    fetch('{% url "monthly_sales_data" %}')
+        .then(response => response.json())
+        .then(data => {
+            const salesCtx = document.getElementById('monthlySalesChart').getContext('2d');
+            new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Nombre de ventes mensuelles',
+                        data: data.data,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        });
+});
+</script>
+{% endblock %}
